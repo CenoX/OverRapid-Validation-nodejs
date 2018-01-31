@@ -18,8 +18,14 @@ router.all('/validation', function (req, res) {
     return;
   }
 
-  console.log(req.body) 
-  console.log(req.headers)  
+  if (req.method != 'POST') {
+    res.status(500).json({
+      error: "Get away!",
+      isSandbox: isSandbox
+    })
+    return;
+  }
+
   if (req.get('x-overrapid-version') == undefined) {
     res.status(500).json({
       error: "This client is not OverRapid client!",
@@ -27,6 +33,8 @@ router.all('/validation', function (req, res) {
     })
   } else {
     res.send('Proceed');
+    console.log(req.body) 
+    console.log(req.headers)  
   }
 });
 
